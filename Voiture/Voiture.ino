@@ -41,12 +41,12 @@ void loop()
     int photoLed = analogRead(0);
     int X_plane = BT.read();
     int Y_plane = BT.read();
-    
+
     // Serial.println("X_plane: ");
     // Serial.println(X_plane);
     // Serial.println("Y_plane: ");
-    Serial.println(Y_plane);
-    // Serial.println(analogRead(0));
+    // Serial.println(Y_plane);
+    Serial.println(analogRead(0));
 
     digitalWrite(trigpin,LOW);
     delayMicroseconds(2);
