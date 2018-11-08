@@ -1,5 +1,5 @@
-// Code Remote
-//  besoin des librairie Wire, LiquidCrystal_I2C & SoftwareSerial
+// Remote code
+// Need : Wire, LiquidCrystal_I2C & SoftwareSerial libraries
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
@@ -32,7 +32,7 @@ void setup()
 
 void loop()
 {
-  // reception des donnée du capteur de distance
+  // receiving data from the distance sensor
   distanceCm = BT.read();
   Serial.println(distanceCm);
 
@@ -42,7 +42,7 @@ void loop()
   int X_map = map(X_plane,0,1023,0,255);
   int Y_map = map(Y_plane,0,1023,0,180);
 
-  // affichage de la distance sur l'écran LCD
+  // distance display on the LCD screen
   if(distanceCm != -1)
   {
     buzstate = true;
@@ -60,7 +60,7 @@ void loop()
     lcd.print("Distance:too far");
   }
 
-  // déclenchement du buzzer quand la distance est inferieur a 40cm
+  // triggering the buzzer when the distance is less than 40cm
   if (distanceCm <= 40 && buzstate == true)
   {
     int freq = map(distanceCm * 58,0,2900,600,50);
@@ -68,12 +68,12 @@ void loop()
     tone(buzzer, freq, Time);
   }
 
-  // envoie des donée a la voiture
+  // send data to the car
   BT.write(X_map);
   int delta = Y_map - Y_save;
   Serial.println(delta);
 
-  // marge de sécuritée pour l'envoie de l'axe Y
+  // safety margin for sending the Y axis
   if(delta > 5)
   {
     Y_save = Y_map;

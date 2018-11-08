@@ -1,21 +1,21 @@
-// Code Voiture
-// on a besoin des librairie SoftwareSerial & Servo
+// Car code
+// Need : SoftwareSerial & Servo libraries
 #include <SoftwareSerial.h>
 #include <Servo.h>
 
-// constante capteur de distance
+// distance sensor constant
 int echopin = 4;
 int trigpin = 5;
 long distanceCm;
 int duration;
 
-// constante moteurs
+// motors constant
 int Speed =  3;
 int Dir = 12;
 int Brake = 9;
 Servo servo;
 
-// constante phares automatique
+// automatic lights constant
 int DOUT_LED = 2;
 int Y_save ;
 
@@ -40,12 +40,12 @@ void loop()
 {
   if(BT.available()>0)
   {
-    // lecture des donnée du joystick reçus 
+    // reading of received data from the joystick
     int photoLed = analogRead(0);
     int X_plane = BT.read();
     int Y_plane = BT.read();
 
-    // prise de mesure du capteur de distance
+    // measurement from the distance sensor
     digitalWrite(trigpin,LOW);
     delayMicroseconds(2);
     digitalWrite(trigpin,HIGH);
@@ -58,14 +58,14 @@ void loop()
       BT.write(distanceCm);  // enoie des données
     }
 
-    // phares automatique
+    // automatic lights
     if(photoLed <= 35)
     {
       digitalWrite(DOUT_LED, HIGH);
     }
 
     // https://www.arduino.cc/en/Tutorial/Knob
-    // control des moteurs
+    // motors control
 
     if (X_plane < 120)    // marche avant
     {
@@ -82,7 +82,7 @@ void loop()
       analogWrite(Speed, X_map);
     }
 
-    // control du servo moteur
+    // servomotor control
     if(Y_plane != -1)
     {
       Y_save = Y_plane;
